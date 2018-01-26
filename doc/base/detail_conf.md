@@ -17,15 +17,14 @@ redis的官网地址，非常好记，是redis.io。
 
 ## redis的特性
 
-**1、**完全居于内存，数据实时的读写内存，定时闪回到文件中。采用单线程,避免了不必要的上下文切换和竞争条件  
-**2、**支持高并发量，官方宣传支持10万级别的并发读写  
-**3、**支持持久存储，机器重启后的，重新加载模式，不会掉数据  
-**4、**海量数据存储，分布式系统支持，数据一致性保证，方便的集群节点添加/删除  
-**5、**Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，zset，hash等数据结构的存储。  
-**6、**灾难恢复--memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复；  
-**7、**虚拟内存--Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘；  
-**8、**Redis支持数据的备份，即master-slave模式的数据备份；
-
+**1.** 完全居于内存，数据实时的读写内存，定时闪回到文件中。采用单线程,避免了不必要的上下文切换和竞争条件  
+**2.** 支持高并发量，官方宣传支持10万级别的并发读写  
+**3.** 支持持久存储，机器重启后的，重新加载模式，不会掉数据  
+**4.** 海量数据存储，分布式系统支持，数据一致性保证，方便的集群节点添加/删除  
+**5.** Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，zset，hash等数据结构的存储。   
+**6.** 灾难恢复--memcache挂掉后，数据不可恢复; redis数据丢失后可以通过aof恢复；  
+**7.** 虚拟内存--Redis当物理内存用完时，可以将一些很久没用到的value 交换到磁盘；  
+**8.** Redis支持数据的备份，即master-slave模式的数据备份；
 
 ----------
 
@@ -70,7 +69,6 @@ redis的官网地址，非常好记，是redis.io。
 `unixsocket` 是否开放Unix套接字接口   
 `timeout`：客户端连接的空闲超时时长；  
 
-
 ----------
 
 
@@ -83,7 +81,6 @@ redis的官网地址，非常好记，是redis.io。
 `logfile`, 日志文件  
 `databases`：设定数据库数量，默认为16个，每个数据库的名字均为整数，从0开始编号，默认操作的数据库为0；  
 切换数据库的方法：`SELECT <dbid>`
-
 
 ----------
 
@@ -99,7 +96,6 @@ redis的官网地址，非常好记，是redis.io。
 `dbfilenamedump.rdb` #rdb文件的名称  
 `dir./ `数据目录，数据库的写入会在这个目录。rdb、aof文件也会写在这个目录  
 
-
 ----------
 
 
@@ -111,16 +107,15 @@ redis的官网地址，非常好记，是redis.io。
 `maxmemory-policy noeviction`
 淘汰策略：**volatile-lru, allkeys-lru, volatile-random, allkeys-random, volatile-ttl, noeviction**
 内存容量超过maxmemory后的处理策略。
->` volatile-lru`：利用LRU算法移除设置过过期时间的key。
-` volatile-random`：随机移除设置过过期时间的key。
-` volatile-ttl`：移除即将过期的key，根据最近过期时间来删除（辅以TTL）
-` allkeys-lru`：利用LRU算法移除任何key。
-` allkeys-random`：随机移除任何key。
-` noeviction`：不移除任何key，只是返回一个写错误。
+- ` volatile-lru`：利用LRU算法移除设置过过期时间的key。  
+- ` volatile-random`：随机移除设置过过期时间的key。  
+- ` volatile-ttl`：移除即将过期的key，根据最近过期时间来删除（辅以TTL）  
+- ` allkeys-lru`：利用LRU算法移除任何key。  
+- ` allkeys-random`：随机移除任何key。  
+- ` noeviction`：不移除任何key，只是返回一个写错误。  
 
 上面的这些驱逐策略，如果redis没有合适的key驱逐，对于写命令，还是会返回错误。redis将不再接收写请求，只接收get请求。写命令包括：set setnx  
-`maxmemory-samples 5 `#淘汰算法运行时的采样样本数；
-
+`maxmemory-samples 5 `#淘汰算法运行时的采样样本数；  
 
 ----------
 
@@ -163,7 +158,6 @@ redis重写会将多个key、value对集合来用一条命令表达。在rewrite
 记录每次写操作至指定的文件尾部实现的持久化；当redis重启时，可通过重新执行文件中的命令在内存中重建出数据库；  
 `BGREWRITEAOF`：AOF文件重写；  
 不会读取正在使用AOF文件，而是通过将内存中的数据以命令的方式保存至临时文件中，完成之后替换原来的AOF文件；
-
 
 ----------
 
