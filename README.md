@@ -4,4 +4,4 @@
 # 目录
 ## redis基础
 
-- 1.1. [redis的介绍安装](doc/base/2018.1.26.md)
+- 1.1. [redis的介绍安装](doc/base/recommend_install.md)
