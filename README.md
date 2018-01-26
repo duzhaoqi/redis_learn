@@ -6,3 +6,4 @@
 
 - 1.1. [redis的介绍安装](doc/base/recommend_install.md)
 - 1.2. [redis的详细配置](doc/base/detail_conf.md)
+- 1.3. [redis的客户端命令和数据类型](/doc/base/cli_data_tpye.md)
