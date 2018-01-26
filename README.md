@@ -5,3 +5,4 @@
 ## redis基础
 
 - 1.1. [redis的介绍安装](doc/base/recommend_install.md)
+- 1.2. [redis的详细配置](doc/base/detail_conf.md)
