@@ -110,3 +110,108 @@ redis> BRPOP list1 list2 0
 1) "list1"
 2) "c"
 ```
+
+---
+
+
+
+## BRPOPLPUSH source destination timeout
+
+>起始版本：2.2.0  
+>时间复杂度：O(1)
+
+BRPOPLPUSH 是 RPOPLPUSH 的阻塞版本。 当 source 包含元素的时候，这个命令表现得跟 RPOPLPUSH 一模一样。 当 source 是空的时候，Redis将会阻塞这个连接，直到另一个客户端 push 元素进入或者达到 timeout 时限。 timeout 为 0 能用于无限期阻塞客户端。  
+查看 RPOPLPUSH 以了解更多信息。  
+
+#### 返回值
+批量回复(bulk-reply): 元素从 source 中弹出来，并压入 destination 中。 如果达到 timeout 时限，会返回一个空的多批量回复(nil-reply)。  
+
+#### 模式：可靠的队列
+请参考RPOPLPUSH 命令文档。
+
+#### 模式：循环列表
+请参考RPOPLPUSH 命令文档。
+
+---
+
+## LINDEX key index
+
+>起始版本：1.0.0   
+>时间复杂度：O(N) where N is the number of elements to traverse to get to the element at index. This makes asking for the first or the last element of the list O(1).
+
+返回列表里的元素的索引 index 存储在 key 里面。 下标是从0开始索引的，所以 0 是表示第一个元素， 1 表示第二个元素，并以此类推。 负数索引用于指定从列表尾部开始索引的元素。在这种方法下，-1 表示最后一个元素，-2 表示倒数第二个元素，并以此往前推。  
+当 key 位置的值不是一个列表的时候，会返回一个error。  
+
+#### 返回值
+bulk-reply：请求的对应元素，或者当 index 超过范围的时候返回 nil。
+
+#### 例子
+```
+redis> LPUSH mylist "World"
+(integer) 1
+redis> LPUSH mylist "Hello"
+(integer) 2
+redis> LINDEX mylist 0
+"Hello"
+redis> LINDEX mylist -1
+"World"
+redis> LINDEX mylist 3
+(nil)
+redis> 
+```
+
+---
+
+## LINSERT key BEFORE|AFTER pivot value
+
+>起始版本：2.2.0  
+>时间复杂度：O(N) where N is the number of elements to traverse before seeing the value pivot. This means that inserting somewhere on the left end on the list (head) can be considered O(1) and inserting somewhere on the right end (tail) is O(N).
+
+把 value 插入存于 key 的列表中在基准值 pivot 的前面或后面。  
+当 key 不存在时，这个list会被看作是空list，任何操作都不会发生。  
+当 key 存在，但保存的不是一个list的时候，会返回error。  
+
+#### 返回值
+integer-reply: 经过插入操作后的list长度，或者当 pivot 值找不到的时候返回 -1。  
+
+#### 例子
+```
+redis> RPUSH mylist "Hello"
+(integer) 1
+redis> RPUSH mylist "World"
+(integer) 2
+redis> LINSERT mylist BEFORE "World" "There"
+(integer) 3
+redis> LRANGE mylist 0 -1
+1) "Hello"
+2) "There"
+3) "World"
+redis> 
+```
+
+---
+
+## LLEN key
+
+>起始版本：1.0.0  
+时间复杂度：O(1)
+
+返回存储在 key 里的list的长度。 如果 key 不存在，那么就被看作是空list，并且返回长度为 0。 当存储在 key 里的值不是一个list的话，会返回error。  
+
+#### 返回值
+
+integer-reply: key对应的list的长度。
+
+#### 例子
+```
+redis> LPUSH mylist "World"
+(integer) 1
+redis> LPUSH mylist "Hello"
+(integer) 2
+redis> LLEN mylist
+(integer) 2
+redis> 
+```
+
+---
+
