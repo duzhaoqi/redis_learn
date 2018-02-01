@@ -7,5 +7,8 @@
 - 1.1. [redis的介绍安装](base/recommend_install.md)
 - 1.2. [redis的详细配置](base/detail_conf.md)
 - 1.3. [redis的客户端命令和数据类型](base/cli_data_type.md)
+
+## 数据类型
 - 2.1. [数据类型之String](base/string.md)
 - 2.2. [数据类型之Hashs](base/hashs.md)
+- 2.3. [数据类型之Lists](base/lists.md)
