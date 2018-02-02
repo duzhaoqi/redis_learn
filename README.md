@@ -12,3 +12,4 @@
 - 2.1. [数据类型之String](base/string.md)
 - 2.2. [数据类型之Hashs](base/hashs.md)
 - 2.3. [数据类型之Lists](base/lists.md)
+- 2.4. [数据类型之Sets](base/sets.md)
